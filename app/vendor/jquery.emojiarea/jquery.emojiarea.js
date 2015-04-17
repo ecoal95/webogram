@@ -61,7 +61,7 @@
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var util = {};
+	window.util = {};
 
 	util.restoreSelection = (function() {
 		if (window.getSelection) {

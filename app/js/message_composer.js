@@ -402,24 +402,10 @@ EmojiPanel.prototype.update = function () {
   var self = this;
   var iconSize = Config.Mobile ? 26 : 20;
 
-  EmojiHelper.getPopularEmoji(function (popularEmoji) {
-    var emoticonCode, emoticonData, spritesheet, pos, categoryIndex;
-    var count = popularEmoji.length;
-    var i, x, y;
-
-    for (i = 0; i < count; i++) {
-      emoticonCode = popularEmoji[i].code;
-      if (emoticonData = Config.Emoji[emoticonCode]) {
-        spritesheet = EmojiHelper.spritesheetPositions[emoticonCode];
-        categoryIndex = spritesheet[0];
-        pos = spritesheet[1];
-        x = iconSize * spritesheet[3];
-        y = iconSize * spritesheet[2];
-        html.push('<a class="composer_emoji_btn" title=":' + encodeEntities(emoticonData[1][0]) + ':" data-code="' + encodeEntities(emoticonCode) + '"><i class="emoji emoji-w20 emoji-spritesheet-' + categoryIndex + '" style="background-position: -' + x + 'px -' + y + 'px;"></i></a>');
-      }
-    }
-    self.containerEl.html(html.join(''));
+  AccessibleEmojis.take(6).forEach(function(emoji) {
+    html.push(emoji.render());
   });
+	self.containerEl.html(html.join(''));
 }
 
 
@@ -741,6 +727,8 @@ MessageComposer.prototype.onRichPaste = function (e) {
     }
   }
 
+  console.log(cData);
+
   try {
     var text = cData.getData('text/plain');
   } catch (e) {
@@ -758,6 +746,7 @@ MessageComposer.prototype.onRichPasteNode = function (e) {
   var element = (e.originalEvent || e).target,
       src = (element || {}).src || '',
       remove = false;
+
 
   if (src.substr(0, 5) == 'data:') {
     remove = true;
@@ -919,6 +908,7 @@ MessageComposer.prototype.onMentionSelected = function (username) {
 }
 
 MessageComposer.prototype.onChange = function (e) {
+	console.log(this.richTextareEl);
   if (this.richTextareaEl) {
     delete this.keyupStarted;
     this.textareaEl.val(getRichValue(this.richTextareaEl[0])).trigger('change');

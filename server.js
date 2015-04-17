@@ -8,12 +8,14 @@ var util = require('util'),
 
 var DEFAULT_PORT = 8000;
 var DEFAULT_HOST = 'localhost';
-
+console.log("start");
 function main(argv) {
+  console.log("start");
   new HttpServer({
     'GET': createServlet(StaticServlet),
     'HEAD': createServlet(StaticServlet)
   }).start(Number(argv[2]) || DEFAULT_PORT, argv[3] || DEFAULT_HOST);
+
 }
 
 function escapeHtml(value) {

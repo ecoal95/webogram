@@ -1263,7 +1263,7 @@ angular.module('myApp.directives', ['myApp.filters'])
       var peerPhotoCompiled = $compile('<span class="composer_user_photo" my-peer-photolink="peerID" img-class="composer_user_photo"></span>');
       var cachedPeerPhotos = {};
 
-      var composer = new MessageComposer(messageField, {
+      window.composer = new MessageComposer(messageField, {
         onTyping: function () {
           $scope.$emit('ui_typing');
         },
